@@ -20,5 +20,5 @@ jobs:
           docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF
           pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
           cp --recursive /usr/share/archiso/configs/releng/ archlive
-          cat archlive/pacman.conf
+          ls -Ral archlive
           EOF
