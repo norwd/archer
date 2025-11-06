@@ -21,7 +21,7 @@ jobs:
 
       - id: install-archiso
         name: "Install ArchISO"
-        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
+        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso jq
 
       - id: prepare-custom-profile
         name: "Prepare Custom Profile"
