@@ -27,38 +27,9 @@ jobs:
         name: "Prepare Custom Profile"
         run: cp --recursive /usr/share/archiso/configs/releng/ archlive
 
-      - id: prepare-custom-packages
-        name: "Prepare Custom Packages"
-        run: |
-          tee -a archlive/packages.x86_64 << EOF | xargs pacman --sync --refresh --sysupgrade --noconfirm --quiet
-          base
-          base-devel
-          bat
-          ffmpeg
-          fzf
-          git
-          make
-          man-db
-          man-pages
-          most
-          posix
-          posix-c-development
-          posix-software-development
-          posix-user-portability
-          sudo
-          thefuck
-          vi
-          vim
-          w3m
-          wget
-          wiki-tui
-          xdg-user-dirs
-          zsh
-          EOF
-
-      - id: prepare-custom-setup
-        name: "Prepare Custom Setup"
-        run: echo 'PROMPT="%B%/ %F{red}%#%f%b "' >> archlive/airootfs/root/.zshrc
+      - id: prepare-install-script
+        name: "Prepare Install Script"
+        run: echo "archinstall" >> archlive/airootfs/root/.zshrc
 
       - id: make-iso
         name: "Make ISO"
