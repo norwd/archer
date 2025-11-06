@@ -35,7 +35,7 @@ jobs:
           cp --recursive /usr/share/archiso/configs/releng/ archlive
 
           # https://wiki.archlinux.org/title/Archiso#Selecting_packages
-          tee -a archlive/packages.x86_64 << EOF_PACKAGE_LIST
+          tee -a archlive/packages.x86_64 << EOF_PACKAGE_LIST | xargs pacman --sync --refresh --sysupgrade --noconfirm --quiet
           base
           base-devel
           bat
@@ -61,7 +61,13 @@ jobs:
           zsh
           EOF_PACKAGE_LIST
 
+          # https://wiki.archlinux.org/title/Archiso#Adding_files_to_image
+          echo 'PROMPT="%B%/ %F{red}%#%f%b "' >> archlive/airootfs/root/.zshrc
+
+          # https://wiki.archlinux.org/title/Archiso#Build_the_ISO
+          # mkarchiso -v -r -w /tmp/archiso-tmp -o /path/to/out_dir /path/to/profile/
+
           # DEBUG
-          ls -Ral archlive/airootfs
+          mkarchiso -h
 
           EOF_DOCKER_SCRIPT
