@@ -18,7 +18,23 @@ jobs:
         name: Run Arch Docker Container
         run: |
           docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF
+
+          # Immediately exit if any command has a non-zero exit status
+          set -e
+
+          # All executed commands are printed to the terminal
+          set -x
+
+          # If any command in a pipeline fails, return that code for the whole pipeline
+          set -o pipefail
+
+          # https://wiki.archlinux.org/title/Archiso#Installation
           pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
+
+          # https://wiki.archlinux.org/title/Archiso#Prepare_a_custom_profile
           cp --recursive /usr/share/archiso/configs/releng/ archlive
-          ls -Ral archlive
+
+          # DEBUG
+          cat packages.x86_64
+
           EOF
