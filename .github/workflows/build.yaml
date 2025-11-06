@@ -32,7 +32,7 @@ jobs:
         run: |
           curl --silent --show-error --location --remote-name --output-dir archlive/airootfs/root/ https://github.com/archlinux/archinstall/raw/refs/heads/master/examples/full_automated_installation.py
 
-          tee --apend archlive/airootfs/root/.zshrc << EOF
+          tee --append archlive/airootfs/root/.zshrc << EOF
           archinstall --script full_automated_installation
           EOF
 
