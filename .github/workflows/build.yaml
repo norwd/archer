@@ -25,68 +25,11 @@ jobs:
 
       - id: prepare-custom-profile
         name: "Prepare Custom Profile"
-        run: cp --recursive /usr/share/archiso/configs/releng/ archlive
+        run: cp --verbose --recursive /usr/share/archiso/configs/releng/ archlive/
 
       - id: prepare-installer-config
         name: "Prepare Installer Config"
-        run: jq --null-input "${JQ_QUERY}" | tee archlive/airootfs/root/config.json
-        env:
-          JQ_QUERY: |
-            {
-              mirror_config: {
-                  mirror_regions: {
-                      Worldwide: [
-                          "http://mirror.rackspace.com/archlinux/$repo/os/$arch",
-                          "https://mirror.rackspace.com/archlinux/$repo/os/$arch",
-                          "https://ftpmirror.infania.net/mirror/archlinux/$repo/os/$arch",
-                          "https://geo.mirror.pkgbuild.com/$repo/os/$arch",
-                          "https://fastly.mirror.pkgbuild.com/$repo/os/$arch"
-                      ]
-                  }
-              },
-              packages: [
-                "base",
-                "base-devel",
-                "bat",
-                "bat-extras",
-                "git",
-                "git-zsh-completion",
-                "github-cli",
-                "htop",
-                "make",
-                "man-db",
-                "man-pages",
-                "most",
-                "posix",
-                "posix-c-development",
-                "posix-software-development",
-                "posix-user-portability",
-                "sudo",
-                "tar",
-                "thefuck",
-                "vi",
-                "vim",
-                "vim-ale",
-                "vim-fugitive",
-                "vim-gitgutter",
-                "vim-molokai",
-                "vim-spell-en",
-                "vim-spell-eo",
-                "vim-syntastic",
-                "w3m",
-                "wget",
-                "wiki-tui",
-                "xdg-user-dirs",
-                "zsh",
-                "zsh-autocomplete",
-                "zsh-autosuggestions",
-                "zsh-completions",
-                "zsh-doc",
-                "zsh-history-substring-search",
-                "zsh-lovers",
-                "zsh-syntax-highlighting"
-              ]
-            }
+        run: cp archinstall_config.json archlive/airootfs/root/archinstall_config.json
 
       # - id: prepare-installer-script
       #   name: "Prepare Installer Script"
@@ -94,10 +37,7 @@ jobs:
 
       - id: prepare-installer-startup
         name: "Prepare Installer Startup"
-        run: |
-          tee --append archlive/airootfs/root/.zshrc << EOF
-          archinstall --script minimal --config config.json
-          EOF
+        run: tee --append archlive/airootfs/root/.zshrc < archinstall_run.sh
 
       - id: make-iso
         name: "Make ISO"
