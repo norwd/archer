@@ -18,5 +18,6 @@ jobs:
         name: Run Arch Docker Container
         run: |
           docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF
-          pacman -Syu --noconfirm archiso
+          pacman -Syu --noconfirm archlinux-keyring archiso
+          echo "DONE: $?"
           EOF
