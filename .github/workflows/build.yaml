@@ -65,9 +65,9 @@ jobs:
           echo 'PROMPT="%B%/ %F{red}%#%f%b "' >> archlive/airootfs/root/.zshrc
 
           # https://wiki.archlinux.org/title/Archiso#Build_the_ISO
-          # mkarchiso -v -r -w /tmp/archiso-tmp -o /path/to/out_dir /path/to/profile/
+          mkarchiso -v archlive
 
           # DEBUG
-          mkarchiso -h
+          ls -Ral work/ out/
 
           EOF_DOCKER_SCRIPT
