@@ -16,6 +16,6 @@ jobs:
 
       - id: docker-run
         run: |
-          docker run "index.docker.io/library/archlinux:latest" /bin/bash << EOF
+          docker run --interactive "index.docker.io/library/archlinux:latest" /bin/bash << EOF
           pacman -Syu --noconfirm archiso
           EOF
