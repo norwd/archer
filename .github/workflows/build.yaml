@@ -17,7 +17,7 @@ jobs:
       - id: docker-run
         name: Run Arch Docker Container
         run: |
-          docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF
+          docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF_DOCKER_SCRIPT
 
           # Immediately exit if any command has a non-zero exit status
           set -e
@@ -34,7 +34,34 @@ jobs:
           # https://wiki.archlinux.org/title/Archiso#Prepare_a_custom_profile
           cp --recursive /usr/share/archiso/configs/releng/ archlive
 
-          # DEBUG
-          cat archlive/packages.x86_64
+          # https://wiki.archlinux.org/title/Archiso#Selecting_packages
+          tee -a archlive/packages.x86_64 << EOF_PACKAGE_LIST
+          base
+          base-devel
+          bat
+          ffmpeg
+          fzf
+          git
+          make
+          man-db
+          man-pages
+          most
+          posix
+          posix-c-development
+          posix-software-development
+          posix-user-portability
+          sudo
+          thefuck
+          vi
+          vim
+          w3m
+          wget
+          wiki-tui
+          xdg-user-dirs
+          zsh
+          EOF_PACKAGE_LIST
 
-          EOF
+          # DEBUG
+          ls -Ral archlive/airootfs
+
+          EOF_DOCKER_SCRIPT
