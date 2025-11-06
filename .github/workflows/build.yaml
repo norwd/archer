@@ -12,4 +12,7 @@ jobs:
 
       - id: checkout
         name: Checkout
-        uses: actions/checkout@v5          
+        uses: actions/checkout@v5
+
+      - id: docker-run
+        run: docker run "index.docker.io/library/archlinux:latest" /bin/sh
