@@ -1,0 +1,15 @@
+---
+
+name: "Build ISO"
+run-name: "Build ISO"
+on: push
+
+jobs:
+  build:
+    name: "Build ISON"
+    runs-on: ubuntu-latest
+    steps:
+
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v5          
