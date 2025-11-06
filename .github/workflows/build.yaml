@@ -8,34 +8,29 @@ jobs:
   build:
     name: "Build ISO"
     runs-on: ubuntu-latest
+
+    container:
+      image: archlinux/archlinux:latest
+      options: --privileged
+
     steps:
 
       - id: checkout
-        name: Checkout
+        name: "Checkout"
         uses: actions/checkout@v5
 
-      - id: docker-run
-        name: Run Arch Docker Container
+      - id: install-archiso
+        name: "Install ArchISO"
+        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
+
+      - id: prepare-custom-profile
+        name: "Prepare Custom Profile"
+        run: cp --recursive /usr/share/archiso/configs/releng/ archlive
+
+      - id: prepare-custom-packages
+        name: "Prepare Custom Packages"
         run: |
-          docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF_DOCKER_SCRIPT
-
-          # Immediately exit if any command has a non-zero exit status
-          set -e
-
-          # All executed commands are printed to the terminal
-          set -x
-
-          # If any command in a pipeline fails, return that code for the whole pipeline
-          set -o pipefail
-
-          # https://wiki.archlinux.org/title/Archiso#Installation
-          pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
-
-          # https://wiki.archlinux.org/title/Archiso#Prepare_a_custom_profile
-          cp --recursive /usr/share/archiso/configs/releng/ archlive
-
-          # https://wiki.archlinux.org/title/Archiso#Selecting_packages
-          tee -a archlive/packages.x86_64 << EOF_PACKAGE_LIST | xargs pacman --sync --refresh --sysupgrade --noconfirm --quiet
+          tee -a archlive/packages.x86_64 << EOF | xargs pacman --sync --refresh --sysupgrade --noconfirm --quiet
           base
           base-devel
           bat
@@ -59,15 +54,19 @@ jobs:
           wiki-tui
           xdg-user-dirs
           zsh
-          EOF_PACKAGE_LIST
+          EOF
 
-          # https://wiki.archlinux.org/title/Archiso#Adding_files_to_image
-          echo 'PROMPT="%B%/ %F{red}%#%f%b "' >> archlive/airootfs/root/.zshrc
+      - id: prepare-custom-setup
+        name: "Prepare Custom Setup"
+        run: echo 'PROMPT="%B%/ %F{red}%#%f%b "' >> archlive/airootfs/root/.zshrc
 
-          # https://wiki.archlinux.org/title/Archiso#Build_the_ISO
-          mkarchiso -v archlive
+      - id: make-iso
+        name: "Make ISO"
+        run: mkarchiso -v -r archlive
 
-          # DEBUG
-          ls -Ral work/ out/
-
-          EOF_DOCKER_SCRIPT
+      - id: upload-artifact
+        name: Upload ISO Artifact
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: Custom Arch Linux ISO
+          path: work/archlinux-*.iso
