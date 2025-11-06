@@ -15,4 +15,4 @@ jobs:
         uses: actions/checkout@v5
 
       - id: docker-run
-        run: docker run "index.docker.io/library/archlinux:latest" pacman -Syu archiso
+        run: docker run "index.docker.io/library/archlinux:latest" pacman -S --noconfirm archiso
