@@ -66,7 +66,15 @@ jobs:
 
       - id: upload-artifact
         name: Upload ISO Artifact
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v5
         with:
           name: Custom Arch Linux ISO
-          path: work/archlinux-*.iso
+          path: out/archlinux-*.iso
+
+          # The desired behavior if no files are found using the provided path.
+          #
+          # Available Options:
+          #   warn: Output a warning but do not fail the action
+          #   error: Fail the action with an error message
+          #   ignore: Do not output any warnings or errors, the action does not fail
+          if-no-files-found: error
