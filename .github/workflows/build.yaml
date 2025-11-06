@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v5
 
       - id: docker-run
+        name: Run Arch Docker Container
         run: |
-          docker run --interactive "index.docker.io/library/archlinux:latest" /bin/bash << EOF
-          pacman -Syu --noconfirm archiso
+          docker run --interactive --privileged --rm --tty "index.docker.io/library/archlinux:latest" /bin/bash << EOF
+          sudo pacman -Syu --noconfirm archiso
           EOF
