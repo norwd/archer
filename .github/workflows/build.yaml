@@ -17,6 +17,6 @@ jobs:
       - id: docker-run
         name: Run Arch Docker Container
         run: |
-          docker run --interactive --privileged --rm --tty "index.docker.io/library/archlinux:latest" /bin/bash << EOF
+          docker run --interactive --privileged --rm "index.docker.io/library/archlinux:latest" /bin/bash << EOF
           sudo pacman -Syu --noconfirm archiso
           EOF
