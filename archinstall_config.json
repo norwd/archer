@@ -1,4 +1,11 @@
 {
+  "hostname": "archlinux",
+  "kernels": [ "linux-zen" ],
+  "locale_config": {
+    "kb_layout": "us",
+    "sys_enc": "UTF-8",
+    "sys_lang": "en_US.UTF-8"
+  },
   "mirror_config": {
     "mirror_regions": {
       "Worldwide": [
@@ -10,6 +17,8 @@
       ]
     }
   },
+  "network_config": { "type": "iso" },
+  "parallel downloads": 100,
   "packages": [
     "base",
     "base-devel",
@@ -51,5 +60,24 @@
     "zsh-history-substring-search",
     "zsh-lovers",
     "zsh-syntax-highlighting"
+  ],
+  "custom_commands": [
+    "echo 'export XDG_CONFIG_HOME=\"${HOME}/etc\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_CACHE_HOME=\"${HOME}/tmp\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_DATA_HOME=\"${HOME}/var\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_STATE_HOME=\"${HOME}/lib\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_LOG_HOME=\"${HOME}/log\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_BIN_HOME=\"${HOME}/bin\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_SRC_HOME=\"${HOME}/src\"' >> /etc/profile.d/10-xdg-base-dirs.sh",
+    "echo 'export XDG_DESKTOP_DIR=\"${XDG_DATA_HOME}/desktop\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_DOCUMENTS_DIR=\"${XDG_DESKTOP_DIR}/documents\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_DOWNLOAD_DIR=\"${XDG_DESKTOP_DIR}/downloads\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_MUSIC_DIR=\"${XDG_DESKTOP_DIR}/music\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_VIDEOS_DIR=\"${XDG_DESKTOP_DIR}/videos\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_PUBLICSHARE_DIR=\"${XDG_DATA_DIR}/public\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo 'export XDG_TEMPLATES_DIR=\"${XDG_CONFIG_DIR}/templates\"' >> /etc/profile.d/20-xdg-user-dirs.sh",
+    "echo '[ -f /etc/profile.d/10-xdg-base-dirs.sh ] && source /etc/profile.d/10-xdg-base-dirs.sh' >> /etc/zsh/zshenv",
+    "echo '[ -f /etc/profile.d/20-xdg-user-dirs.sh ] && source /etc/profile.d/20-xdg-user-dirs.sh' >> /etc/zsh/zshenv",
+    "echo 'export ZDOTDIR=\"${XDG_CONFIG_HOME:-$HOME/.config}/zsh\"' >> /etc/zsh/zshenv"
   ]
 }
