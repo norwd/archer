@@ -21,7 +21,7 @@ jobs:
 
       - id: install-archiso
         name: "Install ArchISO"
-        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
+        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso qemu-base
 
       - id: prepare-custom-profile
         name: "Prepare Custom Profile"
@@ -30,6 +30,10 @@ jobs:
       - id: make-iso
         name: "Make ISO"
         run: mkarchiso -v -r archlive
+
+      - id: run-iso
+        name: "Run ISO"
+        run: run_archiso -i /path/to/archlinux-yyyy.mm.dd-x86_64.iso
 
       - id: upload-artifact
         name: "Upload ISO Artifact"
