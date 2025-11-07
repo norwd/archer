@@ -21,19 +21,11 @@ jobs:
 
       - id: install-archiso
         name: "Install ArchISO"
-        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso jq
+        run: pacman --sync --refresh --sysupgrade --noconfirm --quiet archiso
 
       - id: prepare-custom-profile
         name: "Prepare Custom Profile"
         run: cp --verbose --recursive /usr/share/archiso/configs/releng/ archlive/
-
-      - id: prepare-installer-config
-        name: "Prepare Installer Config"
-        run: cp archinstall_config.json archlive/airootfs/root/archinstall_config.json
-
-      - id: prepare-installer-startup
-        name: "Prepare Installer Startup"
-        run: tee --append archlive/airootfs/root/.zshrc < archinstall_run.sh
 
       - id: make-iso
         name: "Make ISO"
