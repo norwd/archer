@@ -31,10 +31,6 @@ jobs:
         name: "Prepare Installer Config"
         run: cp archinstall_config.json archlive/airootfs/root/archinstall_config.json
 
-      # - id: prepare-installer-script
-      #   name: "Prepare Installer Script"
-      #   run: .
-
       - id: prepare-installer-startup
         name: "Prepare Installer Startup"
         run: tee --append archlive/airootfs/root/.zshrc < archinstall_run.sh
