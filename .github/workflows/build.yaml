@@ -33,7 +33,7 @@ jobs:
 
       - id: run-iso
         name: "Run ISO"
-        run: run_archiso -i /path/to/archlinux-yyyy.mm.dd-x86_64.iso
+        run: run_archiso -i out/archlinux-*.iso
 
       - id: upload-artifact
         name: "Upload ISO Artifact"
