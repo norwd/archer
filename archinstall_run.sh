@@ -1,1 +1,1 @@
-archinstall --script minimal --config archinstall_config.json
+archinstall --config archinstall_config.json
