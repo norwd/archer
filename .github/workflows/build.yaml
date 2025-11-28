@@ -31,9 +31,9 @@ jobs:
         name: "Make ISO"
         run: mkarchiso -v -r archlive
 
-      - id: run-iso
-        name: "Run ISO"
-        run: run_archiso -i out/archlinux-*.iso
+      # - id: run-iso
+      #   name: "Run ISO"
+      #   run: run_archiso -i out/archlinux-*.iso
 
       - id: upload-iso
         name: "Upload ISO"
